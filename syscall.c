@@ -51,7 +51,7 @@ argint(int n, int *ip)
 // Fetch the nth word-sized system call argument as a pointer
 // to a block of memory of size n bytes.  Check that the pointer
 // lies within the process address space.
-int
+int //chnage something here (n?)
 argptr(int n, char **pp, int size)
 {
   int i;

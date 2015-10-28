@@ -37,6 +37,7 @@ exec(char *path, char **argv)
 
   // Load program into memory.
   sz = 0;
+  sz = PGROUNDUP(sz);
   for(i=0, off=elf.phoff; i<elf.phnum; i++, off+=sizeof(ph)){
     if(readi(ip, (char*)&ph, off, sizeof(ph)) != sizeof(ph))
       goto bad;

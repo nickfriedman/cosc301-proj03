@@ -17,7 +17,7 @@
 int
 fetchint(uint addr, int *ip)
 {
-  if(addr >= proc->sz || addr+4 > proc->sz)
+  if((proc->pid != 1 && addr < PGSIZE) || addr+4 > proc->sz)
     return -1;
   *ip = *(int*)(addr);
   return 0;
@@ -31,7 +31,7 @@ fetchstr(uint addr, char **pp)
 {
   char *s, *ep;
 
-  if(addr >= proc->sz)
+  if((proc->pid != 1 && addr < PGSIZE) || addr >= proc->sz)
     return -1;
   *pp = (char*)addr;
   ep = (char*)proc->sz;
@@ -51,12 +51,14 @@ argint(int n, int *ip)
 // Fetch the nth word-sized system call argument as a pointer
 // to a block of memory of size n bytes.  Check that the pointer
 // lies within the process address space.
-int //chnage something here (n?)
+int
 argptr(int n, char **pp, int size)
 {
   int i;
-  
+
   if(argint(n, &i) < 0)
+    return -1;
+  if(proc->pid != 1 && (uint)i < PGSIZE)
     return -1;
   if((uint)i >= proc->sz || (uint)i+size > proc->sz)
     return -1;

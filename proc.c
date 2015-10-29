@@ -464,3 +464,17 @@ procdump(void)
     cprintf("\n");
   }
 }
+int 
+kern_mprotect(int pid){
+//Do stuff
+
+    //failure
+    return -1;
+}
+int
+kern_munprotect(int pid){
+//Do stuff
+
+    //failure
+    return -1;
+}

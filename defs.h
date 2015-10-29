@@ -147,6 +147,10 @@ int             argstr(int, char**);
 int             fetchint(uint, int*);
 int             fetchstr(uint, char**);
 void            syscall(void);
+int             kern_mprotect(int);
+void            do_mprotect(struct proc *);
+int             kern_munprotect(int);
+void            do_munproected(struct proc *);
 
 // timer.c
 void            timerinit(void);

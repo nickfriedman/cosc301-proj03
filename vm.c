@@ -377,6 +377,16 @@ copyout(pde_t *pgdir, uint va, void *p, uint len)
   return 0;
 }
 
+void 
+do_mprotect(struct proc *p){
+//add stuff
+}
+
+void
+do_munprotect(struct proc *p){
+//add stuff
+}
+
 //PAGEBREAK!
 // Blank page.
 //PAGEBREAK!

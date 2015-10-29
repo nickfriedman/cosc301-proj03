@@ -58,9 +58,9 @@ argptr(int n, char **pp, int size)
 
   if(argint(n, &i) < 0)
     return -1;
-  if(proc->pid != 1 && (uint)i < PGSIZE)
+  else if(proc->pid != 1 && (uint)i < PGSIZE)
     return -1;
-  if((uint)i >= proc->sz || (uint)i+size > proc->sz)
+  else if((uint)i >= proc->sz || (uint)i+size > proc->sz)
     return -1;
   *pp = (char*)i;
   return 0;

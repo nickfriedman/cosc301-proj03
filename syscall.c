@@ -17,11 +17,8 @@
 int
 fetchint(uint addr, int *ip)
 {
-  if(addr >= proc->sz || addr+4 > proc->sz) 
+  if((proc->pid != 1 && addr < PGSIZE) || addr+4 > proc->sz)
     return -1;
-  else if(proc->pid > 1 && addr<PGSIZE){
-    return -1;
-  }
   *ip = *(int*)(addr);
   return 0;
 }
@@ -33,12 +30,9 @@ int
 fetchstr(uint addr, char **pp)
 {
   char *s, *ep;
-
-  if(addr >= proc->sz) 
+  
+  if((proc->pid != 1 && addr < PGSIZE) || addr >= proc->sz)
     return -1;
-  else if(proc->pid > 1 && addr<PGSIZE){
-    return -1;
-  }
   *pp = (char*)addr;
   ep = (char*)proc->sz;
   for(s = *pp; s < ep; s++)
@@ -61,13 +55,12 @@ int
 argptr(int n, char **pp, int size)
 {
   int i;
-  
+
   if(argint(n, &i) < 0)
     return -1;
-  else if(proc->pid !=1 && (uint)i < PGSIZE){
+  else if(proc->pid != 1 && (uint)i < PGSIZE)
     return -1;
-  }
-  else if((uint)i >= proc->sz || (uint)i+size > proc->sz) 
+  else if((uint)i >= proc->sz || (uint)i+size > proc->sz)
     return -1;
   *pp = (char*)i;
   return 0;

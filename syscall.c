@@ -30,7 +30,7 @@ int
 fetchstr(uint addr, char **pp)
 {
   char *s, *ep;
-  
+
   if((proc->pid != 1 && addr < PGSIZE) || addr >= proc->sz)
     return -1;
   *pp = (char*)addr;
@@ -51,7 +51,7 @@ argint(int n, int *ip)
 // Fetch the nth word-sized system call argument as a pointer
 // to a block of memory of size n bytes.  Check that the pointer
 // lies within the process address space.
-int 
+int
 argptr(int n, char **pp, int size)
 {
   int i;

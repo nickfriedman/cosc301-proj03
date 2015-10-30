@@ -378,12 +378,12 @@ copyout(pde_t *pgdir, uint va, void *p, uint len)
 }
 
 void 
-do_mprotect(struct proc *p){
+do_mprotect(void *addr, int len){
 //add stuff
 }
 
 void
-do_munprotect(struct proc *p){
+do_munprotect(void *addr, int len){
 //add stuff
 }
 

@@ -463,18 +463,31 @@ procdump(void)
     }
     cprintf("\n");
   }
-}
+} 
 int 
-kern_mprotect(int pid){
-//Do stuff
-
-    //failure
-    return -1;
+kern_mprotect(void *addr, int len){
+    if ((uint)addr % PGSIZE != 0)
+        return -1;
+    if((uint)addr >= proc->sz || (uint)addr+4 > proc->sz)
+        return -1;
+    if(len <= 0)
+        return -1;
+    if((uint)addr + (len * PGSIZE) > proc->sz)
+       return -1;
+       
+    return 0;
 }
 int
-kern_munprotect(int pid){
-//Do stuff
+kern_munprotect(void *addr, int len){
 
-    //failure
-    return -1;
+    if ((uint)addr % PGSIZE != 0)
+        return -1;
+    if((uint)addr >= proc->sz || (uint)addr+4 > proc->sz)
+        return -1;
+    if(len <= 0)
+        return -1;
+    if((uint)addr + (len * PGSIZE) > proc->sz)
+       return -1;
+       
+    return 0;
 }

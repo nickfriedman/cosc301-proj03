@@ -90,17 +90,25 @@ sys_uptime(void)
   return xticks;
 }
 int sys_mprotect(void) {
-  int pid;
-  if (argint(0, &pid) < 0) {
+  int len;
+  int addr;
+  if (argint(1, &len) < 0) {
 	return -1;
   }
-  return kern_mprotect(pid);
+  if (argint(0, &addr) < 0) {
+    return -1;
+  }
+  return kern_mprotect((void*)addr, len);
 }
 
 int sys_munprotect(void) {
-  int pid;
-  if (argint(0, &pid) < 0) {
+  int len;
+  int addr;
+  if (argint(1, &len) < 0) {
 	return -1;
   }
-  return kern_munprotect(pid);
+  if (argint(0, &addr) <0){
+    return -1;
+  }
+  return kern_munprotect((void*)addr, len);
 }

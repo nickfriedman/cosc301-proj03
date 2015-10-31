@@ -150,7 +150,7 @@ void            syscall(void);
 int             kern_mprotect(void*, int);
 void            do_mprotect(void*, int);
 int             kern_munprotect(void*, int);
-void            do_munproected(void*, int);
+void            do_munprotect(void*, int);
 
 // timer.c
 void            timerinit(void);

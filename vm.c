@@ -381,7 +381,7 @@ void
 do_mprotect(void *addr, int len){
     for(int i = 0; i < len; i++){
         pde_t* tmp;
-        if((tmp = walkpgdir(proc->pgdir,(void*)addr+i*PGSIZE,0)) != 0)
+        if((tmp = walkpgdir(proc->pgdir,(void*)(addr+i*PGSIZE), 0)) != 0)
             *tmp = *tmp & (~PTE_W);
     }
     lcr3(v2p(proc->pgdir));
@@ -391,8 +391,8 @@ void
 do_munprotect(void *addr, int len){
     for(int i = 0; i < len; i++){
         pde_t* tmp;
-        if((tmp = walkpgdir(proc->pgdir,(void*)addr+i*PGSIZE,0)) != 0)
-            *tmp = *tmp | PTE_W;
+        if((tmp = walkpgdir(proc->pgdir,(void*)(addr+i*PGSIZE),0)) != 0)
+            *tmp = *tmp | (PTE_W);
     }
     lcr3(v2p(proc->pgdir));
 }

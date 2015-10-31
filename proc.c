@@ -466,27 +466,31 @@ procdump(void)
 }
 int
 kern_mprotect(void *addr, int len){
-    if ((uint)addr % PGSIZE != 0)
+    if((int)addr % PGSIZE != 0)
         return -1;
-    if((uint)addr >= proc->sz || (uint)addr+4 > proc->sz)
+    if((int)addr >= proc->sz || (int)addr + 4 > proc->sz)
         return -1;
     if(len <= 0)
         return -1;
-    if((uint)addr + (len * PGSIZE) > proc->sz)
+    if((int)addr + (len * PGSIZE) > proc->sz)
        return -1;
-
+    if(addr == 0)
+        return -1;
+    do_mprotect((void*)addr,len);
     return 0;
 }
 int
 kern_munprotect(void *addr, int len){
-    if ((uint)addr % PGSIZE != 0)
+    if((int)addr % PGSIZE != 0)
         return -1;
-    if((uint)addr >= proc->sz || (uint)addr+4 > proc->sz)
+    if((int)addr >= proc->sz || (int)addr + 4 > proc->sz)
         return -1;
     if(len <= 0)
         return -1;
-    if((uint)addr + (len * PGSIZE) > proc->sz)
+    if((int)addr + (len * PGSIZE) > proc->sz)
        return -1;
-
+    if(addr == 0)
+       return -1;
+    do_munprotect((void*)addr,len);
     return 0;
 }

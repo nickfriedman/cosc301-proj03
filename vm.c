@@ -379,8 +379,8 @@ copyout(pde_t *pgdir, uint va, void *p, uint len)
 
 void
 do_mprotect(void *addr, int len){
+    pde_t* tmp;
     for(int i = 0; i < len; i++){
-        pde_t* tmp;
         if((tmp = walkpgdir(proc->pgdir,(void*)(addr+i*PGSIZE), 0)) != 0)
             *tmp = *tmp & (~PTE_W);
     }
@@ -389,8 +389,8 @@ do_mprotect(void *addr, int len){
 
 void
 do_munprotect(void *addr, int len){
+    pde_t* tmp;
     for(int i = 0; i < len; i++){
-        pde_t* tmp;
         if((tmp = walkpgdir(proc->pgdir,(void*)(addr+i*PGSIZE),0)) != 0)
             *tmp = *tmp | (PTE_W);
     }
